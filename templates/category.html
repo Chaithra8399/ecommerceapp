@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+   {% if category %}
+     {{category.description|truncatewords:155}}
+   {% else %}
+      welcome to z cool store where you can buy diffrent items....
+   {% endif %}
+{% endblock %}
+
+{% block title %}
+ {% if category %}
+     {{category.name}} - z cool store
+   {% else %}
+      our new collection- z cool store....
+   {% endif %}
+{% endblock %}
+
+{% block content %}
+{% if category %}
+<div>
+    <div class="row my_row_class">
+<!--        <div class="mx-auto">-->
+<!--        <p><a href="{% url 'shop:allprodCat' %}">our product collections</a></p>-->
+<!--    </div>-->
+        </div>
+</div>
+   {% endif %}
+<div class="mx-auto">
+    {% if category %}
+    <img class="my_image" src="{{category.image.url}}" alt="{{category.name}}" style="width:100%;">
+</div>
+<br>
+<div>
+    <h1 class="text-center my_title">{{category.name}}</h1>
+        <p class="text-justify"> {{category.description}}</p>
+  </div>
+{% else %}
+<div >
+     <img class="my_image my_image_padding" src="{% static 'img/banner9.png' %}" alt="our product" style="width:100%;">
+</div>
+<br>
+<div >
+    <h1 class="text-center my_title" >our product collections</h1>
+    <p class="text-justify my_tit">Sway your way through life with Z COOL collection of fabulous dresses. Be it for your everyday wear, your clubbing nights or for your corporate chic looks, zcool has just the right selection of dresses for women to make the right statement. Browse through and get bewitched!
+
+<br>Casual Dresses<br>
+Get your casual looks right with stylish dresses from Zcool. Whether it is a cute shift dress you are looking for or a relaxed beach dress, we have them all here for you.Play with your style with cool cold-shoulder dresses and belted denim dresses. You could also choose to go the boho-chic way in printed summer dresses or chic maxi dresses.
+<br>
+Party Dresses<br>
+Turn heads with your on-point style with Zcool selection of party dresses. Be it flattering bodycon dresses, shimmery shift dresses or classic LBDs, we have everything here. There are short dresses to flaunt those long legs of yours and maxi dresses with side slits to keep them guessing.
+<br>
+Formal Dresses<br>
+Slay with your style in your office looks with formal dresses for women. Keep it sleek in solid shift dresses, bring in the big guns with cool A-line dresses or go the playful way with skater dresses. Keep it classic in black dresses or go bold with a red dress. We have them all.
+<br>
+Brands On Z cool</p>
+
+</div>
+{% endif %}
+
+<div class="container ">
+<!--    <div class="row mx_auto ">-->
+<!--        {% for product in products.object_list %}-->
+<!--        <div class="my_bottom_margin  col-12 col-md-6 col-lg-4 ">-->
+<!--<div class="card text-center " style="min-width: 18em;">-->
+<!--  <a href="{{product.get_url}}"><img class="card-img-top my_image " src="{{product.image.url}}" alt="{{product.name}}" ></a>-->
+<!--<div class="card-body">-->
+<!--    <h4>{{product.name}}</h4>-->
+<!--    <p>{{product.price}}</p>-->
+<!--</div>-->
+<!--</div>-->
+<!--    </div>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+
+    <div class="row "style="display: flex;">
+        {% for product in products.object_list %}
+        <div class="col-md-3 d-flex">
+            <div class="card text-center mx-2 my-2 flex-fill" style="width: 200px; height: auto;">
+                <a href="{{product.get_url}}"><img class="card-img-top " src="{{product.image.url}}" alt="{{product.name}}" height="400px"></a>
+                <div class="card-body">
+                      <h4>{{product.name}}</h4>
+                      <p>{{product.price}}</p>
+        </div>
+    </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="mx-auto">
+        {% if products.paginator.num_pages > 1 %}
+        <hr>
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+            <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}" > {{pg}}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <br>
+    </div>
+{% endblock %}
